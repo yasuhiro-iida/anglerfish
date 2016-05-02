@@ -8,19 +8,19 @@ html(lang="ja")
 
   body(ng-app="App")
 
-    .container
+    .container(ng-controller="MainController")
       h1 ToDo
 
-      form
+      form(ng-submit="addTodo()")
         .input-group
-          input(type="text", required, placeholder="新しい要件を入力").form-control
+          input.form-control(type="text", required, placeholder="新しい要件を入力", ng-model="newTitle")
           span.input-group-btn
-            button(type="submit").btn.btn-default 追加
+            button.btn.btn-default(type="submit") 追加
 
       div
         button.btn.btn-success 全て完了/未了
         button.btn.btn-default.active 全部 
-          span 3
+          span {{ todos.length }}
         button.btn.btn-default 未了 
           span 2
         button.btn.btn-default 完了 
@@ -28,15 +28,16 @@ html(lang="ja")
         button.btn.btn-danger 完了アイテムを全て削除
 
       ul.list-unstyled
-        li.todo-item
+        li.todo-item(ng-repeat="todo in todos", ng-class="{done: todo.done}")
           form
             .input-group
               span.input-group-addon
-                input(type="checkbox")
-              span.form-control.todo-title 未了の ToDo
+                input(type="checkbox", ng-model="todo.done")
+              span.form-control.todo-title {{ todo.title }}
               span.input-group-btn
-                button(type="reset").btn.btn-danger 削除
+                button.btn.btn-danger(type="reset") 削除
 
+      //
         li.todo-item.done
           form
             .input-group
@@ -56,4 +57,4 @@ html(lang="ja")
                 button(type="reset").btn.btn-danger 削除
 
     script(src="/bower_components/angular/angular.min.js")
-    script(src="/app.js")
+    script(src="/js/app.js")
