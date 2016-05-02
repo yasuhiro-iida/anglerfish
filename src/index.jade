@@ -19,16 +19,16 @@ html(lang="ja")
 
       div
         button.btn.btn-success 全て完了/未了
-        button.btn.btn-default.active 全部 
+        button.btn.btn-default(ng-click="changeFilter()", ng-class="{active: !currentFilter}") 全部 
           span {{ todos.length }}
-        button.btn.btn-default 未了 
-          span 2
-        button.btn.btn-default 完了 
-          span 1
+        button.btn.btn-default(ng-click="changeFilter(filter.remaining)", ng-class="{active: currentFilter == filter.remaining}") 未了 
+          span n
+        button.btn.btn-default(ng-click="changeFilter(filter.done)", ng-class="{active: currentFilter == filter.done}") 完了 
+          span n
         button.btn.btn-danger 完了アイテムを全て削除
 
       ul.list-unstyled
-        li.todo-item(ng-repeat="todo in todos", ng-class="{done: todo.done}")
+        li.todo-item(ng-repeat="todo in todos | filter:currentFilter", ng-class="{done: todo.done}")
           form
             .input-group
               span.input-group-addon
