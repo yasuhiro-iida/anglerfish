@@ -1,0 +1,59 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="UTF-8")
+    title Todoアプリ
+    link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/todo.css")
+
+  body(ng-app="App")
+
+    .container
+      h1 ToDo
+
+      form
+        .input-group
+          input(type="text", required, placeholder="新しい要件を入力").form-control
+          span.input-group-btn
+            button(type="submit").btn.btn-default 追加
+
+      div
+        button.btn.btn-success 全て完了/未了
+        button.btn.btn-default.active 全部 
+          span 3
+        button.btn.btn-default 未了 
+          span 2
+        button.btn.btn-default 完了 
+          span 1
+        button.btn.btn-danger 完了アイテムを全て削除
+
+      ul.list-unstyled
+        li.todo-item
+          form
+            .input-group
+              span.input-group-addon
+                input(type="checkbox")
+              span.form-control.todo-title 未了の ToDo
+              span.input-group-btn
+                button(type="reset").btn.btn-danger 削除
+
+        li.todo-item.done
+          form
+            .input-group
+              span.input-group-addon
+                input(type="checkbox", checked)
+              span.form-control.todo-title 完了した ToDo
+              span.input-group-btn
+                button(type="reset").btn.btn-danger 削除
+
+        li.todo-item.editing
+          form
+            .input-group
+              span.input-group-addon
+                input(type="checkbox", checked)
+              input(type="text", required, value="編集中の ToDo").form-control
+              span.input-group-btn
+                button(type="reset").btn.btn-danger 削除
+
+    script(src="/bower_components/angular/angular.min.js")
+    script(src="/app.js")
