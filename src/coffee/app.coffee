@@ -1,5 +1,5 @@
 angular.module('App', [])
-  .controller('MainController', ['$scope', ($scope) ->
+  .controller('MainController', ['$scope', '$filter', ($scope, $filter) ->
     $scope.todos = []
     $scope.newTitle = ''
     $scope.addTodo = ->
@@ -16,5 +16,14 @@ angular.module('App', [])
 
     $scope.changeFilter = (filter) ->
       $scope.currentFilter = filter
+
+    where = $filter 'filter'
+    $scope.$watch 'todos', (todos) ->
+      length = todos.length
+
+      $scope.allCount = length
+      $scope.doneCount = where(todos, $scope.filter.done).length
+      $scope.remainingCount = length - $scope.doneCount
+    , true
   ])
 

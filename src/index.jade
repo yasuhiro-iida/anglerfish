@@ -20,11 +20,11 @@ html(lang="ja")
       div
         button.btn.btn-success 全て完了/未了
         button.btn.btn-default(ng-click="changeFilter()", ng-class="{active: !currentFilter}") 全部 
-          span {{ todos.length }}
+          span {{ allCount }}
         button.btn.btn-default(ng-click="changeFilter(filter.remaining)", ng-class="{active: currentFilter == filter.remaining}") 未了 
-          span n
+          span {{ remainingCount }}
         button.btn.btn-default(ng-click="changeFilter(filter.done)", ng-class="{active: currentFilter == filter.done}") 完了 
-          span n
+          span {{ doneCount }}
         button.btn.btn-danger 完了アイテムを全て削除
 
       ul.list-unstyled
@@ -38,15 +38,6 @@ html(lang="ja")
                 button.btn.btn-danger(type="reset") 削除
 
       //
-        li.todo-item.done
-          form
-            .input-group
-              span.input-group-addon
-                input(type="checkbox", checked)
-              span.form-control.todo-title 完了した ToDo
-              span.input-group-btn
-                button(type="reset").btn.btn-danger 削除
-
         li.todo-item.editing
           form
             .input-group
