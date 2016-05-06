@@ -11,13 +11,13 @@ html(lang="ja")
     .container(ng-controller="MainController")
       h1 ToDo
 
-      form(ng-submit="addTodo()")
+      form(ng-controller="RegisterController", ng-submit="addTodo()")
         .input-group
           input.form-control(type="text", required, placeholder="新しい要件を入力", ng-model="newTitle")
           span.input-group-btn
             button.btn.btn-default(type="submit") 追加
 
-      div
+      div(ng-controller="ToolbarController")
         button.btn.btn-success(ng-click="checkAll()") 全て完了/未了
         button.btn.btn-default(ng-click="changeFilter()", ng-class="{active: !currentFilter}") 全部 
           span {{ allCount }}
@@ -27,8 +27,8 @@ html(lang="ja")
           span {{ doneCount }}
         button.btn.btn-danger(ng-click="removeDoneTodo()") 完了アイテムを全て削除
 
-      ul.list-unstyled
-        li.todo-item(ng-repeat="todo in todos | filter:currentFilter", ng-class="{done: todo.done, editing: todo == editing}")
+      ul.list-unstyled(ng-controller="TodoListController")
+        li.todo-item(ng-repeat="todo in todoList | filter:currentFilter", ng-class="{done: todo.done, editing: todo == editing}")
           form(name="todoForm", ng-submit="doneEdit(todoForm)")
             .input-group
               span.input-group-addon
@@ -39,6 +39,4 @@ html(lang="ja")
                 button.btn.btn-danger(type="reset", ng-click="removeTodo(todo)") 削除
 
     script(src="/bower_components/angular/angular.min.js")
-    // script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.0rc3/angular.min.js")
-    // script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js")
     script(src="/js/app.js")

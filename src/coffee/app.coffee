@@ -1,61 +1,94 @@
 angular.module('App', [])
 
-  .controller('MainController', ['$scope', '$filter', ($scope, $filter) ->
-    $scope.todos = []
+.factory('todos', ['$rootScope', '$filter', ($scope, $filter) ->
+  list = []
+
+  $scope.$watch ->
+    list
+  , (value) ->
+    $scope.$broadcast 'change:list', value
+  , true
+
+  where = $filter 'filter'
+  done = { done: true }
+  remaining = { done: false }
+
+  filter:
+    done: done
+    remaining: remaining
+  getDone: ->
+    where list, done
+  add: (title) ->
+    list.push { title: title, done: false }
+  remove: (currentTodo) ->
+    list = where list, (todo) ->
+      currentTodo != todo
+  removeDone: ->
+    list = where list, remaining
+  changeState: (state) ->
+    angular.forEach list, (todo) ->
+      todo.done = state
+])
+
+.controller('RegisterController', ['$scope', 'todos', ($scope, todos) ->
+  $scope.newTitle = ''
+
+  $scope.addTodo = ->
+    todos.add $scope.newTitle
     $scope.newTitle = ''
-    $scope.addTodo = ->
-      $scope.todos.push { title: $scope.newTitle, done: false }
-      $scope.newTitle = ''
+])
 
-    $scope.filter =
-      done:
-        done: true
-      remaining:
-        done: false
+.controller('ToolbarController', ['$scope', 'todos', ($scope, todos) ->
+  $scope.filter = todos.filter
 
-    $scope.currentFilter = null
+  $scope.$on 'change:list', (evt, list) ->
+    length = list.length
+    doneCount = todos.getDone().length
 
-    $scope.changeFilter = (filter) ->
-      $scope.currentFilter = filter
+    $scope.allCount = length
+    $scope.doneCount = doneCount
+    $scope.remainingCount = length - doneCount
 
-    where = $filter 'filter'
-    $scope.$watch 'todos', (todos) ->
-      length = todos.length
+  $scope.checkAll = ->
+    todos.changeState !!$scope.remainingCount
 
-      $scope.allCount = length
-      $scope.doneCount = where(todos, $scope.filter.done).length
-      $scope.remainingCount = length - $scope.doneCount
-    , true
+  $scope.changeFilter = (filter) ->
+    $scope.$emit 'change:filter', filter
 
-    originalTitle = null
-    $scope.editing = null
+  $scope.removeDoneTodo = ->
+    todos.removeDone()
+])
 
-    $scope.editTodo = (todo) ->
-      originalTitle = todo.title
-      $scope.editing = todo
+.controller('TodoListController', ['$scope', 'todos', ($scope, todos) ->
+  $scope.$on 'change:list', (evt, list) ->
+    $scope.todoList = list
 
-    $scope.doneEdit = (todoForm) ->
-      $scope.editing.title = originalTitle if todoForm.$invalid
-      $scope.editing = originalTitle = null
+  originalTitle = null
+  $scope.editing = null
 
-    $scope.checkAll = ->
-      state = !!$scope.remainingCount
+  $scope.editTodo = (todo) ->
+    originalTitle = todo.title
+    $scope.editing = todo
 
-      angular.forEach $scope.todos, (todo) ->
-        todo.done = state
+  $scope.doneEdit = (todoForm) ->
+    $scope.editing.title = originalTitle if todoForm.$invalid
+    $scope.editing = originalTitle = null
 
-    $scope.removeDoneTodo = ->
-      $scope.todos = where $scope.todos, $scope.filter.remaining
+  $scope.removeTodo = (todo) ->
+    todos.remove(todo)
+])
 
-    $scope.removeTodo = (currentTodo) ->
-      $scope.todos = where $scope.todos, (todo) ->
-        currentTodo != todo
-  ])
+.controller('MainController', ['$scope', ($scope) ->
+  $scope.currentFilter = null
 
-  .directive('mySelect', ->
-    link = (scope, element, attrs) ->
-      scope.$watch attrs.mySelect, (value) ->
-        element[0].select() if value
+  $scope.$on 'change:filter', (evt, filter) ->
+    $scope.currentFilter = filter
+])
 
-    { link: link }
-  )
+.directive('mySelect', ->
+  link = (scope, element, attrs) ->
+    scope.$watch attrs.mySelect, (value) ->
+      element[0].select() if value
+
+  { link: link }
+)
