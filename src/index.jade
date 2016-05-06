@@ -28,24 +28,17 @@ html(lang="ja")
         button.btn.btn-danger 完了アイテムを全て削除
 
       ul.list-unstyled
-        li.todo-item(ng-repeat="todo in todos | filter:currentFilter", ng-class="{done: todo.done}")
-          form
+        li.todo-item(ng-repeat="todo in todos | filter:currentFilter", ng-class="{done: todo.done, editing: todo == editing}")
+          form(name="todoForm", ng-submit="doneEdit(todoForm)")
             .input-group
               span.input-group-addon
                 input(type="checkbox", ng-model="todo.done")
-              span.form-control.todo-title {{ todo.title }}
-              span.input-group-btn
+              span.form-control.todo-title(ng-hide="todo == editing", ng-dblclick="editTodo(todo)") {{ todo.title }}
+              input.form-control(type="text", required, ng-model="todo.title", ng-show="todo == editing", my-select="todo == editing", ng-blur="doneEdit(todoForm)")
+              span.input-group-btn(ng-if="todo != editing")
                 button.btn.btn-danger(type="reset") 削除
 
-      //
-        li.todo-item.editing
-          form
-            .input-group
-              span.input-group-addon
-                input(type="checkbox", checked)
-              input(type="text", required, value="編集中の ToDo").form-control
-              span.input-group-btn
-                button(type="reset").btn.btn-danger 削除
-
     script(src="/bower_components/angular/angular.min.js")
+    // script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.0rc3/angular.min.js")
+    // script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js")
     script(src="/js/app.js")
