@@ -18,14 +18,14 @@ html(lang="ja")
             button.btn.btn-default(type="submit") 追加
 
       div
-        button.btn.btn-success 全て完了/未了
+        button.btn.btn-success(ng-click="checkAll()") 全て完了/未了
         button.btn.btn-default(ng-click="changeFilter()", ng-class="{active: !currentFilter}") 全部 
           span {{ allCount }}
         button.btn.btn-default(ng-click="changeFilter(filter.remaining)", ng-class="{active: currentFilter == filter.remaining}") 未了 
           span {{ remainingCount }}
         button.btn.btn-default(ng-click="changeFilter(filter.done)", ng-class="{active: currentFilter == filter.done}") 完了 
           span {{ doneCount }}
-        button.btn.btn-danger 完了アイテムを全て削除
+        button.btn.btn-danger(ng-click="removeDoneTodo()") 完了アイテムを全て削除
 
       ul.list-unstyled
         li.todo-item(ng-repeat="todo in todos | filter:currentFilter", ng-class="{done: todo.done, editing: todo == editing}")
@@ -36,7 +36,7 @@ html(lang="ja")
               span.form-control.todo-title(ng-hide="todo == editing", ng-dblclick="editTodo(todo)") {{ todo.title }}
               input.form-control(type="text", required, ng-model="todo.title", ng-show="todo == editing", my-select="todo == editing", ng-blur="doneEdit(todoForm)")
               span.input-group-btn(ng-if="todo != editing")
-                button.btn.btn-danger(type="reset") 削除
+                button.btn.btn-danger(type="reset", ng-click="removeTodo(todo)") 削除
 
     script(src="/bower_components/angular/angular.min.js")
     // script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.0rc3/angular.min.js")
