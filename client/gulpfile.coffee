@@ -4,6 +4,7 @@ jade = require 'gulp-jade'
 stylus = require 'gulp-stylus'
 coffee = require 'gulp-coffee'
 browserSync = require('browser-sync').create()
+Server = require('karma').Server
 
 gulp.task 'browser-sync', ['coffee', 'jade', 'stylus'], ->
   browserSync.init
@@ -38,3 +39,16 @@ gulp.task 'coffee', ->
     .pipe browserSync.stream()
 
 gulp.task 'default', ['browser-sync']
+
+gulp.task 'test', (done) ->
+  new Server
+    configFile: __dirname + '/karma.conf.coffee'
+  , done
+    .start()
+
+gulp.task 'test-singlerun', (done) ->
+  new Server
+    configFile: __dirname + '/karma.conf.coffee'
+    singleRun: true
+  , done
+    .start()
