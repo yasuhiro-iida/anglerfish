@@ -16,10 +16,22 @@ module.exports = (config) ->
     ]
 
     preprocessors:
-      './src/coffee/*.coffee': ['coffee']
+      './src/coffee/*.coffee': ['coverage']
       './test/unit/coffee/*Spec.coffee': ['coffee']
 
-    reporters: ['progress']
+    coffeePreprocessor:
+      options:
+        sourceMap: true
+
+    reporters: ['progress', 'coverage']
+
+    coverageReporter:
+      type: 'html'
+      dir: 'coverage'
+      instrumenters:
+        ibrik : require('ibrik')
+      instrumenter:
+        '**/*.coffee': 'ibrik'
 
     port: 9876
 
@@ -34,7 +46,8 @@ module.exports = (config) ->
     plugins: [
       'karma-chrome-launcher',
       'karma-jasmine',
-      'karma-coffee-preprocessor'
+      'karma-coffee-preprocessor',
+      'karma-coverage'
     ]
 
     singleRun: false
