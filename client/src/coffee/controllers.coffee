@@ -54,11 +54,3 @@ angular.module('todoController', [])
   $scope.$on 'change:filter', (evt, filter) ->
     $scope.currentFilter = filter
 ])
-
-.directive('mySelect', ->
-  link = (scope, element, attrs) ->
-    scope.$watch attrs.mySelect, (value) ->
-      element[0].select() if value
-
-  { link: link }
-)
