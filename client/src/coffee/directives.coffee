@@ -4,7 +4,7 @@ mySelect = ->
       element[0].select() if value
     )
 
-  { link: link }
+  link: link
 
 angular
   .module('todoApp')
