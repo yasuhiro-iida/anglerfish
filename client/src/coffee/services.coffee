@@ -1,6 +1,6 @@
-angular.module('todoService', [])
+angular.module 'todoApp'
 
-.factory('todos', ['$rootScope', '$filter', 'ToDo', ($scope, $filter, ToDo) ->
+.factory 'todos', ['$rootScope', '$filter', 'ToDo', ($scope, $filter, ToDo) ->
   list = ToDo.find()
 
   $scope.$watch ->
@@ -42,4 +42,4 @@ angular.module('todoService', [])
       do (state) ->
         todo.done = state
         todo.$save()
-])
+]

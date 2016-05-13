@@ -1,9 +1,8 @@
-angular.module('todoDirective', [])
+angular.module 'todoApp'
 
-.directive('mySelect', ->
+.directive 'mySelect', ->
   link = (scope, element, attrs) ->
     scope.$watch attrs.mySelect, (value) ->
       element[0].select() if value
 
   { link: link }
-)

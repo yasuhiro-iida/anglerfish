@@ -1,14 +1,14 @@
-angular.module('todoController', [])
+angular.module 'todoApp'
 
-.controller('RegisterController', ['$scope', 'todos', ($scope, todos) ->
+.controller 'RegisterController', ['$scope', 'todos', ($scope, todos) ->
   $scope.newTitle = ''
 
   $scope.addTodo = ->
     todos.add $scope.newTitle
     $scope.newTitle = ''
-])
+]
 
-.controller('ToolbarController', ['$scope', 'todos', ($scope, todos) ->
+.controller 'ToolbarController', ['$scope', 'todos', ($scope, todos) ->
   $scope.filter = todos.filter
 
   $scope.$on 'change:list', (evt, list) ->
@@ -27,9 +27,9 @@ angular.module('todoController', [])
 
   $scope.removeDoneTodo = ->
     todos.removeDone()
-])
+]
 
-.controller('TodoListController', ['$scope', 'todos', ($scope, todos) ->
+.controller 'TodoListController', ['$scope', 'todos', ($scope, todos) ->
   $scope.$on 'change:list', (evt, list) ->
     $scope.todoList = list
 
@@ -53,11 +53,11 @@ angular.module('todoController', [])
 
   $scope.check = (todo) ->
     todos.update todo
-])
+]
 
-.controller('MainController', ['$scope', ($scope) ->
+.controller 'MainController', ['$scope', ($scope) ->
   $scope.currentFilter = null
 
   $scope.$on 'change:filter', (evt, filter) ->
     $scope.currentFilter = filter
-])
+]

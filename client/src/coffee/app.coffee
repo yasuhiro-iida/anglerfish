@@ -1,9 +1,6 @@
-angular.module('todoApp', [
-  'lbServices',
-  'todoService',
-  'todoController',
-  'todoDirective'
-])
+angular.module 'todoApp', [
+  'lbServices'
+]
 
 .config (LoopBackResourceProvider) ->
   LoopBackResourceProvider.setUrlBase 'http://localhost:3000/api'
