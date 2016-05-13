@@ -1,16 +1,16 @@
 module.exports = (config) ->
-  config.set
+  config.set(
 
     basePath: ''
 
     frameworks: ['jasmine']
 
     files: [
-      './bower_components/angular/angular.min.js',
-      './bower_components/angular-resource/angular-resource.min.js',
-      './bower_components/angular-mocks/angular-mocks.js',
-      './src/coffee/*.coffee',
-      './test/unit/coffee/*Spec.coffee',
+      './bower_components/angular/angular.min.js'
+      './bower_components/angular-resource/angular-resource.min.js'
+      './bower_components/angular-mocks/angular-mocks.js'
+      './src/coffee/*.coffee'
+      './test/unit/coffee/*Spec.coffee'
       './src/sdk/*.js'
     ]
 
@@ -46,12 +46,13 @@ module.exports = (config) ->
     browsers: ['Chrome']
 
     plugins: [
-      'karma-chrome-launcher',
-      'karma-jasmine',
-      'karma-coffee-preprocessor',
+      'karma-chrome-launcher'
+      'karma-jasmine'
+      'karma-coffee-preprocessor'
       'karma-coverage'
     ]
 
     singleRun: false
 
     concurrency: Infinity
+  )
