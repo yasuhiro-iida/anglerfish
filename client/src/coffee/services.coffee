@@ -1,8 +1,15 @@
-todos = ($scope, $filter, ToDo) ->
-  list = ToDo.find()
+todos = ($scope, $filter, $log, ToDo) ->
   where = $filter('filter')
-  done = done: true
-  remaining = done: false
+  done = { done: true }
+  remaining = { done: false }
+
+  errorHandler = (err) ->
+    $log.error(err)
+
+  list = ToDo
+    .find({}, ->
+      return
+    , errorHandler)
 
   $scope.$watch(
     ->
@@ -16,37 +23,55 @@ todos = ($scope, $filter, ToDo) ->
     where(list, done)
 
   add = (title) ->
-    list.push(ToDo.create({ title: title, done: false }))
+    ToDo
+      .create({ title: title, done: false })
+      .$promise
+      .then((response) ->
+        list.push(response)
+      )
+      .catch(errorHandler)
 
   update = (todo) ->
-    todo.$save()
+    todo
+      .$save()
+      .then(->
+        return
+      )
+      .catch(errorHandler)
 
   remove = (currentTodo) ->
-    ToDo.deleteById(id: currentTodo.id)
+    ToDo
+      .deleteById({ id: currentTodo.id })
       .$promise
       .then(->
         list = where(list, (todo) ->
           currentTodo != todo
         )
       )
+      .catch(errorHandler)
 
   removeDone = ->
     doneList = where(list, done)
     for doneTodo in doneList
       do (doneTodo) ->
-        ToDo.deleteById(id: doneTodo.id)
+        ToDo
+          .deleteById({ id: doneTodo.id })
           .$promise
           .then(->
             list = where(list, (todo) ->
               todo.id != doneTodo.id
             )
           )
+          .catch(errorHandler)
 
   changeState = (state) ->
     for todo in list
       do (state) ->
         todo.done = state
-        todo.$save()
+        todo
+          .$save()
+          .$promise
+          .catch(errorHandler)
 
   filter:
     done: done
@@ -60,4 +85,4 @@ todos = ($scope, $filter, ToDo) ->
 
 angular
   .module('todoApp')
-  .factory('todos', ['$rootScope', '$filter', 'ToDo', todos])
+  .factory('todos', ['$rootScope', '$filter', '$log', 'ToDo', todos])
