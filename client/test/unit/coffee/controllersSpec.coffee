@@ -1,14 +1,30 @@
 describe 'todoControllerモジュールのテスト', ->
 
-  $scope = $controller = $rootScope = todos = undefined
+  $scope = $controller = $rootScope = $httpBackend = todos = undefined
 
   beforeEach module 'todoApp'
 
-  beforeEach inject (_$controller_, _$rootScope_, _todos_) ->
+  beforeEach inject (_$controller_, _$rootScope_, _$httpBackend_, _todos_) ->
     $controller = _$controller_
     $rootScope = _$rootScope_
     $scope = $rootScope.$new()
+    $httpBackend = _$httpBackend_
     todos = _todos_
+
+  expectTodoAdd = (title, id) ->
+    todo = { title: title, done: false }
+    $httpBackend.expectPOST 'http://localhost:3000/api/ToDos', todo
+      .respond angular.extend id: id, todo
+
+  expectTodoGet = (response) ->
+    response = response || [
+        { id: 1, title: 'foo', done: false }
+        { id: 2, title: 'bar', done: true }
+        { id: 3, title: 'baz', done: false }
+      ]
+
+    $httpBackend.expectGET 'http://localhost:3000/api/ToDos'
+      .respond response
 
   it 'RegisterController', ->
     $controller 'RegisterController', $scope: $scope
@@ -28,36 +44,39 @@ describe 'todoControllerモジュールのテスト', ->
     beforeEach ->
       $controller 'ToolbarController', $scope: $scope
 
+    afterEach ->
+      # $httpBackend.verifyNoOutstandingExpectation()
+      # $httpBackend.verifyNoOutstandingRequest()
+
     it '$scope.filterとtodos.filterが同じオブジェクト', ->
       expect($scope.filter).toEqual todos.filter
 
     it '全部/未了/完了タスク数が適切である', ->
-      $rootScope.$digest()
-
-      expect($scope.allCount).toBe 0
-      expect($scope.doneCount).toBe 0
-      expect($scope.remainingCount).toBe 0
-
-      todos.add 'foo'
-      todos.add 'bar'
-      todos.add 'baz'
-      $rootScope.$digest()
-
+      expectTodoGet()
+      $httpBackend.flush()
       expect($scope.allCount).toBe 3
-      expect($scope.doneCount).toBe 0
+      expect($scope.doneCount).toBe 1
+      expect($scope.remainingCount).toBe 2
+
+      expectTodoAdd 'qux', 4
+      todos.add 'qux'
+      $httpBackend.flush()
+      expect($scope.allCount).toBe 4
+      expect($scope.doneCount).toBe 1
       expect($scope.remainingCount).toBe 3
 
     it 'checkAll 未了タスクなし', ->
       spyOn todos, 'changeState'
-      $rootScope.$digest()
+      expectTodoGet [ id: 1, title: 'foo', done: true ]
+      $httpBackend.flush()
       $scope.checkAll()
 
       expect(todos.changeState).toHaveBeenCalledWith false
 
     it 'checkAll 未了タスクあり', ->
       spyOn todos, 'changeState'
-      todos.add 'foo'
-      $rootScope.$digest()
+      expectTodoGet()
+      $httpBackend.flush()
       $scope.checkAll()
 
       expect(todos.changeState).toHaveBeenCalledWith true
@@ -93,15 +112,13 @@ describe 'todoControllerモジュールのテスト', ->
 
     it 'doneEdit 正しいフォーム', ->
       $scope.editTodo fooTodo
-
       expect($scope.editing).toBe fooTodo
 
-      fooTodo.title = 'changed'
+      spyOn todos, 'update'
+
       validForm = $invalid: false
-
       $scope.doneEdit validForm
-
-      expect(fooTodo.title).toBe 'changed'
+      expect(todos.update).toHaveBeenCalledWith(fooTodo)
 
     it 'doneEdit 不正なフォーム', ->
       $scope.editTodo fooTodo

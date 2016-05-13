@@ -41,11 +41,18 @@ angular.module('todoController', [])
     $scope.editing = todo
 
   $scope.doneEdit = (todoForm) ->
-    $scope.editing.title = originalTitle if todoForm.$invalid
+    if todoForm.$invalid
+      $scope.editing.title = originalTitle
+    else
+      todos.update $scope.editing
+
     $scope.editing = originalTitle = null
 
   $scope.removeTodo = (todo) ->
     todos.remove(todo)
+
+  $scope.check = (todo) ->
+    todos.update todo
 ])
 
 .controller('MainController', ['$scope', ($scope) ->

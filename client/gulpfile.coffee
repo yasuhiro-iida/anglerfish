@@ -6,7 +6,7 @@ coffee = require 'gulp-coffee'
 browserSync = require('browser-sync').create()
 Server = require('karma').Server
 
-gulp.task 'browser-sync', ['coffee', 'jade', 'stylus'], ->
+gulp.task 'browser-sync', ['coffee', 'jade', 'stylus', 'sdk'], ->
   browserSync.init
     server:
       baseDir: './dist'
@@ -37,6 +37,10 @@ gulp.task 'coffee', ->
     .pipe coffee()
     .pipe gulp.dest './dist/js'
     .pipe browserSync.stream()
+
+gulp.task 'sdk', ->
+  gulp.src './src/sdk/lb-services.js'
+    .pipe gulp.dest './dist/js'
 
 gulp.task 'default', ['browser-sync']
 

@@ -7,9 +7,11 @@ module.exports = (config) ->
 
     files: [
       './bower_components/angular/angular.min.js',
+      './bower_components/angular-resource/angular-resource.min.js',
       './bower_components/angular-mocks/angular-mocks.js',
       './src/coffee/*.coffee',
-      './test/unit/coffee/*Spec.coffee'
+      './test/unit/coffee/*Spec.coffee',
+      './src/sdk/*.js'
     ]
 
     exclude: [
