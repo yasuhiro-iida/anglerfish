@@ -18,7 +18,7 @@ ToolbarController = ($scope, todos) ->
   )
 
   $scope.checkAll = ->
-    todos.changeState !!$scope.remainingCount
+    todos.changeState(!!$scope.remainingCount)
 
   $scope.changeFilter = (filter) ->
     $scope.$emit('change:filter', filter)
@@ -56,8 +56,9 @@ TodoListController = ($scope, todos) ->
 MainController = ($scope) ->
   $scope.currentFilter = ''
 
-  $scope.$on 'change:filter', (evt, filter) ->
+  $scope.$on('change:filter', (evt, filter) ->
     $scope.currentFilter = filter
+  )
 
 angular
   .module('todoApp')

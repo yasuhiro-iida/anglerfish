@@ -3,10 +3,11 @@ plumber = require('gulp-plumber')
 jade = require('gulp-jade')
 stylus = require('gulp-stylus')
 coffee = require('gulp-coffee')
+coffeelint = require('gulp-coffeelint')
 browserSync = require('browser-sync').create()
 Server = require('karma').Server
 
-gulp.task('browser-sync', ['coffee', 'jade', 'stylus', 'sdk'], ->
+gulp.task('browser-sync', ['coffee', 'coffeelint', 'jade', 'stylus', 'sdk'], ->
   browserSync.init(
     server:
       baseDir: './dist'
@@ -16,7 +17,9 @@ gulp.task('browser-sync', ['coffee', 'jade', 'stylus', 'sdk'], ->
 
   gulp.watch('./src/*.jade', ['jade'], browserSync.reload)
   gulp.watch('./src/stylus/*.stylus', ['stylus'], browserSync.reload)
-  gulp.watch('./src/coffee/*.coffee', ['coffee'], browserSync.reload)
+  gulp.watch('./src/coffee/*.coffee',
+              ['coffee', 'coffeelint'],
+              browserSync.reload)
 )
 
 gulp.task('jade', ->
@@ -40,6 +43,12 @@ gulp.task('coffee', ->
     .pipe(coffee())
     .pipe(gulp.dest('./dist/js'))
     .pipe(browserSync.stream())
+)
+
+gulp.task('coffeelint', ->
+  gulp.src('./src/coffee/*.coffee')
+    .pipe(coffeelint())
+    .pipe(coffeelint.reporter('coffeelint-stylish'))
 )
 
 gulp.task('sdk', ->
