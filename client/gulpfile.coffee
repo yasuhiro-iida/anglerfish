@@ -15,7 +15,7 @@ gulp.task('browser-sync', ['coffee', 'coffeelint', 'jade', 'stylus', 'sdk'], ->
         '/bower_components': 'bower_components'
   )
 
-  gulp.watch('./src/*.jade', ['jade'], browserSync.reload)
+  gulp.watch('./src/**/*.jade', ['jade'], browserSync.reload)
   gulp.watch('./src/stylus/*.stylus', ['stylus'], browserSync.reload)
   gulp.watch('./src/coffee/*.coffee',
               ['coffee', 'coffeelint'],
@@ -23,7 +23,7 @@ gulp.task('browser-sync', ['coffee', 'coffeelint', 'jade', 'stylus', 'sdk'], ->
 )
 
 gulp.task('jade', ->
-  gulp.src('./src/*.jade')
+  gulp.src('./src/**/*.jade')
     .pipe(jade(pretty: true))
     .pipe(gulp.dest('./dist'))
     .pipe(browserSync.stream())
