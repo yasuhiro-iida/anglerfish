@@ -5,6 +5,7 @@ routeProvider = ($routeProvider) ->
   $routeProvider
     .when('/', {
       templateUrl: 'partials/todo.html'
+      controller: 'MainController'
     })
     .when('/signup', {
       templateUrl: 'partials/signup.html'
