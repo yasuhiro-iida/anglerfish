@@ -1,6 +1,5 @@
-form.form-signin
-  h2.form-signin-heading サインイン
-  input.form-control(type="email", placeholder="Email address", required, autofocus)
-  input.form-control(type="password", placeholder="Password", required)
-  button.btn.btn-lg.btn-primary.btn-block(type="submit") Signin
-
+form.form-signin(ng-submit="vm.signup()")
+  h2.form-signin-heading サインアップ
+  input.form-control(type="email", placeholder="Email address", required, autofocus, ng-model="vm.email")
+  input.form-control(type="password", placeholder="Password", required, ng-model="vm.password")
+  button.btn.btn-lg.btn-primary.btn-block(type="submit") Signup

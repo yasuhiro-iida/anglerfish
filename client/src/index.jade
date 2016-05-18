@@ -19,10 +19,12 @@ html(lang="ja")
 
         .collapse.navbar-collapse#navbar-collapse-1
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href="#/signup") サインイン
-            li
+            li(ng-hide="currentUser")
+              a(href="#/signup") サインアップ
+            li(ng-hide="currentUser")
               a(href="#/login") ログイン
+            li(ng-controller="LogoutController as vm", ng-show="currentUser")
+              a(href="", ng-click="vm.logout()") ログアウト
 
     .container
       div(ng-view)
@@ -30,6 +32,7 @@ html(lang="ja")
     script(src="/bower_components/angular/angular.min.js")
     script(src="/bower_components/angular-resource/angular-resource.min.js")
     script(src="/bower_components/angular-route/angular-route.min.js")
+    script(src="/bower_components/ngstorage/ngStorage.min.js")
     script(src="/bower_components/jquery/dist/jquery.min.js")
     script(src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
     script(src="/js/app.js")
@@ -37,3 +40,6 @@ html(lang="ja")
     script(src="/js/controllers.js")
     script(src="/js/directives.js")
     script(src="/js/lb-services.js")
+    script(src="/js/signup.controller.js")
+    script(src="/js/login.controller.js")
+    script(src="/js/logout.controller.js")

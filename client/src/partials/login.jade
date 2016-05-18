@@ -1,5 +1,5 @@
-form.form-login
+form.form-login(ng-submit="vm.login()")
   h2.form-login-heading ログイン
-  input.form-control(type="email", placeholder="Email address", required, autofocus)
-  input.form-control(type="password", placeholder="Password", required)
+  input.form-control(type="email", placeholder="Email address", required, autofocus, ng-model="vm.email")
+  input.form-control(type="password", placeholder="Password", required, ng-model="vm.password")
   button.btn.btn-lg.btn-primary.btn-block(type="submit") Login
