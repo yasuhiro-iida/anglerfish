@@ -6,6 +6,7 @@ config = ($routeProvider, LoopBackResourceProvider) ->
     .when('/', {
       templateUrl: 'partials/todo.html'
       controller: 'MainController'
+      controllerAs: 'vm'
     })
     .when('/signup', {
       templateUrl: 'partials/signup.html'

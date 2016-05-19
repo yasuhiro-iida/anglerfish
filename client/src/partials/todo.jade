@@ -1,29 +1,29 @@
 h1 ToDo
 
-form(ng-controller="RegisterController", ng-submit="addTodo()")
+form(ng-controller="RegisterController as registCtrl", ng-submit="registCtrl.addTodo()")
   .input-group
-    input.form-control(type="text", required, placeholder="新しい要件を入力", ng-model="newTitle")
+    input.form-control(type="text", required, placeholder="新しい要件を入力", ng-model="registCtrl.newTitle")
     span.input-group-btn
       button.btn.btn-default(type="submit") 追加
 
-div(ng-controller="ToolbarController")
-  button.btn.btn-success(ng-click="checkAll()") 全て完了/未了
-  button.btn.btn-default(ng-click="changeFilter()", ng-class="{active: !currentFilter}") 全部 
-    span {{ allCount }}
-  button.btn.btn-default(ng-click="changeFilter(filter.remaining)", ng-class="{active: currentFilter == filter.remaining}") 未了 
-    span {{ remainingCount }}
-  button.btn.btn-default(ng-click="changeFilter(filter.done)", ng-class="{active: currentFilter == filter.done}") 完了 
-    span {{ doneCount }}
-  button.btn.btn-danger(ng-click="removeDoneTodo()") 完了アイテムを全て削除
+div(ng-controller="ToolbarController as barCtrl")
+  button.btn.btn-success(ng-click="barCtrl.checkAll()") 全て完了/未了
+  button.btn.btn-default(ng-click="barCtrl.changeFilter()", ng-class="{active: !vm.currentFilter}") 全部 
+    span {{ barCtrl.allCount }}
+  button.btn.btn-default(ng-click="barCtrl.changeFilter(barCtrl.filter.remaining)", ng-class="{active: vm.currentFilter == barCtrl.filter.remaining}") 未了 
+    span {{ barCtrl.remainingCount }}
+  button.btn.btn-default(ng-click="barCtrl.changeFilter(barCtrl.filter.done)", ng-class="{active: vm.currentFilter == barCtrl.filter.done}") 完了 
+    span {{ barCtrl.doneCount }}
+  button.btn.btn-danger(ng-click="barCtrl.removeDoneTodo()") 完了アイテムを全て削除
 
-ul.list-unstyled(ng-controller="TodoListController")
-  li.todo-item(ng-repeat="todo in todoList | filter:currentFilter", ng-class="{done: todo.done, editing: todo == editing}")
-    form(name="todoForm", ng-submit="doneEdit(todoForm)")
+ul.list-unstyled(ng-controller="TodoListController as listCtrl")
+  li.todo-item(ng-repeat="todo in vm.todoList | filter:vm.currentFilter", ng-class="{done: todo.done, editing: todo == listCtrl.editing}")
+    form(name="todoForm", ng-submit="listCtrl.doneEdit(todoForm)")
       .input-group
         span.input-group-addon
-          input(type="checkbox", ng-model="todo.done", ng-change="check(todo)", ng-checked="todo.done")
-        span.form-control.todo-title(ng-hide="todo == editing", ng-dblclick="editTodo(todo)") {{ todo.title }}
-        input.form-control(type="text", required, ng-model="todo.title", ng-show="todo == editing", my-select="todo == editing", ng-blur="doneEdit(todoForm)")
-        span.input-group-btn(ng-if="todo != editing")
-          button.btn.btn-danger(type="reset", ng-click="removeTodo(todo)") 削除
+          input(type="checkbox", ng-model="todo.done", ng-change="listCtrl.check(todo)", ng-checked="todo.done")
+        span.form-control.todo-title(ng-hide="todo == listCtrl.editing", ng-dblclick="listCtrl.editTodo(todo)") {{ todo.title }}
+        input.form-control(type="text", required, ng-model="todo.title", ng-show="todo == listCtrl.editing", my-select="todo == listCtrl.editing", ng-blur="listCtrl.doneEdit(todoForm)")
+        span.input-group-btn(ng-if="todo != listCtrl.editing")
+          button.btn.btn-danger(type="reset", ng-click="listCtrl.removeTodo(todo)") 削除
 
