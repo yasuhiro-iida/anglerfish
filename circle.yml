@@ -1,0 +1,13 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  node:
+    version: 5.11.1
+
+dependencies:
+  override:
+    - cd ./client && npm install
+
+test:
+  override:
+    - cd ./client && gulp test-singlerun
