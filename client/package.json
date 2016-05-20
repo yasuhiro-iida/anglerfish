@@ -2,7 +2,8 @@
   "name": "todo-angular",
   "private": true,
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "test": "gulp test-singlerun"
   },
   "devDependencies": {
     "bower": "^1.7.9",
