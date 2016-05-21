@@ -27,3 +27,5 @@ gulp.task('coffeelint', ->
 )
 
 gulp.task('default', ['nodemon'])
+
+gulp.task('compile', ['coffee'])

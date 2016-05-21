@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "postinstall": "bower install",
-    "test": "gulp test-singlerun"
+    "test": "gulp test-singlerun",
+    "compile": "gulp compile"
   },
   "devDependencies": {
     "bower": "^1.7.9",

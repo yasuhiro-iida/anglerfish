@@ -69,3 +69,5 @@ gulp.task('test-singlerun', (done) ->
   , done)
     .start()
 )
+
+gulp.task('compile', ['jade', 'stylus', 'coffee', 'sdk'])
