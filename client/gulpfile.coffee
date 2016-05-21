@@ -11,8 +11,6 @@ gulp.task('browser-sync', ['coffee', 'coffeelint', 'jade', 'stylus', 'sdk'], ->
   browserSync.init(
     server:
       baseDir: './dist'
-      routes:
-        '/bower_components': 'bower_components'
   )
 
   gulp.watch('./src/**/*.jade', ['jade'], browserSync.reload)
