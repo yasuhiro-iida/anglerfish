@@ -6,20 +6,20 @@ module.exports = (config) ->
     frameworks: ['jasmine']
 
     files: [
-      './bower_components/angular/angular.min.js'
-      './bower_components/angular-resource/angular-resource.min.js'
-      './bower_components/angular-mocks/angular-mocks.js'
-      './src/coffee/*.coffee'
-      './test/unit/coffee/*Spec.coffee'
-      './src/sdk/*.js'
+      './dist/bower_components/angular/angular.min.js'
+      './dist/bower_components/angular-resource/angular-resource.min.js'
+      './dist/bower_components/angular-mocks/angular-mocks.js'
+      './src/client/coffee/**/*.coffee'
+      './test/unit/coffee/**/*Spec.coffee'
+      './src/client/sdk/*.js'
     ]
 
     exclude: [
     ]
 
     preprocessors:
-      './src/coffee/*.coffee': ['coverage']
-      './test/unit/coffee/*Spec.coffee': ['coffee']
+      './src/client/coffee/**/*.coffee': ['coverage']
+      './test/unit/coffee/**/*Spec.coffee': ['coffee']
 
     coffeePreprocessor:
       options:

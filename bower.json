@@ -1,5 +1,5 @@
 {
-  "name": "todo-angular",
+  "name": "anglerfish",
   "private": true,
   "dependencies": {
     "angular": "^1.5.5",

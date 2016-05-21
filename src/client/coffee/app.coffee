@@ -1,5 +1,5 @@
 config = ($routeProvider, LoopBackResourceProvider) ->
-  LoopBackResourceProvider.setUrlBase('http://localhost:3000/api')
+  LoopBackResourceProvider.setUrlBase('http://localhost:8000/api')
   LoopBackResourceProvider.setAuthHeader('X-Access-Token')
 
   $routeProvider

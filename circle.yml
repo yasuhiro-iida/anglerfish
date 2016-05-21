@@ -6,8 +6,8 @@ machine:
 
 dependencies:
   override:
-    - cd ./client && npm install
+    - npm install
 
 test:
   override:
-    - cd ./client && npm test
+    - npm test
