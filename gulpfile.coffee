@@ -4,9 +4,12 @@ jade = require('gulp-jade')
 stylus = require('gulp-stylus')
 coffee = require('gulp-coffee')
 coffeelint = require('gulp-coffeelint')
+ngConstant = require('gulp-ng-constant')
 bsync = require('browser-sync').create()
 Server = require('karma').Server
 nodemon = require('gulp-nodemon')
+
+console.log()
 
 sources = {
   jade: './src/client/**/*.jade'
@@ -57,7 +60,18 @@ gulp.task('sdk', ->
     .pipe(gulp.dest('./dist/js'))
 )
 
-gulp.task('browser-sync', ['jade', 'stylus', 'coffee-client', 'sdk', 'start-server'], ->
+gulp.task('config', ->
+  config = require('./config.json')
+  ngConstant({
+    constants: config.constants[process.env.DEPLOY_ENV || 'development']
+    stream: true
+    name: config.name
+    deps: config.deps
+  })
+    .pipe(gulp.dest('./dist/js'))
+)
+
+gulp.task('browser-sync', ['jade', 'stylus', 'coffee-client', 'sdk', 'config', 'start-server'], ->
   bsync.init(
     server:
       baseDir: './dist'
@@ -93,6 +107,6 @@ gulp.task('test-singlerun', (done) ->
     .start()
 )
 
-gulp.task('compile', ['jade', 'stylus', 'coffee-client', 'coffee-server', 'sdk'])
+gulp.task('compile', ['jade', 'stylus', 'coffee-client', 'coffee-server', 'sdk', 'config'])
 
 gulp.task('lint', ['coffeelint'])

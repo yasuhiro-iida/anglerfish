@@ -29,11 +29,11 @@ deployment:
   production:
     branch: master
     commands:
-      - npm run compile
+      - DEPLOY_ENV=production npm run compile
       - aws s3 sync dist $S3_PRODUCTION
 
   staging:
     branch: staging
     commands:
-      - npm run compile
+      - DEPLOY_ENV=staging npm run compile
       - aws s3 sync dist $S3_STAGING

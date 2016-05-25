@@ -1,5 +1,5 @@
-config = ($routeProvider, LoopBackResourceProvider) ->
-  LoopBackResourceProvider.setUrlBase('http://localhost:8000/api')
+config = (apiUrl, $routeProvider, LoopBackResourceProvider) ->
+  LoopBackResourceProvider.setUrlBase(apiUrl)
   LoopBackResourceProvider.setAuthHeader('X-Access-Token')
 
   $routeProvider
@@ -34,6 +34,6 @@ run = ($rootScope, $location, $localStorage) ->
   )
 
 angular
-  .module('todoApp', ['lbServices', 'ngRoute', 'ngStorage'])
-  .config(['$routeProvider', 'LoopBackResourceProvider', config])
+  .module('todoApp', ['todoApp.config', 'lbServices', 'ngRoute', 'ngStorage'])
+  .config(['apiUrl', '$routeProvider', 'LoopBackResourceProvider', config])
   .run(['$rootScope', '$location', '$localStorage', run])
