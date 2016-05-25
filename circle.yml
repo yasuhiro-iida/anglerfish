@@ -16,7 +16,8 @@ machine:
 
 dependencies:
   pre:
-    - pip install -U awscli awsebcli
+    - pip install -U awscli
+    - pip install -U awsebcli
   override:
     - npm install
 
