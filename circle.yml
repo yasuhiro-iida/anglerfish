@@ -31,9 +31,11 @@ deployment:
     commands:
       - DEPLOY_ENV=production npm run compile
       - aws s3 sync dist $S3_PRODUCTION
+      - eb deploy
 
   staging:
     branch: staging
     commands:
       - DEPLOY_ENV=staging npm run compile
       - aws s3 sync dist $S3_STAGING
+      - eb deploy
