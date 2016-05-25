@@ -6,7 +6,8 @@
     "postinstall": "bower install",
     "start": "node server/server.js",
     "test": "gulp test-singlerun",
-    "compile": "gulp compile"
+    "compile": "gulp compile",
+    "lint": "gulp lint"
   },
   "dependencies": {
     "compression": "^1.0.3",
