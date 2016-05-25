@@ -8,9 +8,11 @@ module.exports = (config) ->
     files: [
       './dist/bower_components/angular/angular.min.js'
       './dist/bower_components/angular-resource/angular-resource.min.js'
+      './dist/bower_components/angular-route/angular-route.min.js'
       './dist/bower_components/angular-mocks/angular-mocks.js'
+      './dist/bower_components/ngstorage/ngStorage.min.js'
       './src/client/coffee/**/*.coffee'
-      './test/unit/coffee/**/*Spec.coffee'
+      './test/client/coffee/**/*.spec.coffee'
       './src/client/sdk/*.js'
     ]
 
@@ -19,7 +21,7 @@ module.exports = (config) ->
 
     preprocessors:
       './src/client/coffee/**/*.coffee': ['coverage']
-      './test/unit/coffee/**/*Spec.coffee': ['coffee']
+      './test/client/coffee/**/*.spec.coffee': ['coffee']
 
     coffeePreprocessor:
       options:
