@@ -11,9 +11,10 @@ module.exports = (config) ->
       './dist/bower_components/angular-route/angular-route.min.js'
       './dist/bower_components/angular-mocks/angular-mocks.js'
       './dist/bower_components/ngstorage/ngStorage.min.js'
+      './dist/js/ngConstants.js'
+      './dist/js/lb-services.js'
       './src/client/coffee/**/*.coffee'
       './test/client/coffee/**/*.spec.coffee'
-      './src/client/sdk/*.js'
     ]
 
     exclude: [

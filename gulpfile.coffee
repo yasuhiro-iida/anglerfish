@@ -93,12 +93,12 @@ gulp.task('start-server', ['coffee-server'], ->
 
 gulp.task('default', ['browser-sync'])
 
-gulp.task('test', (done) ->
+gulp.task('test', ['config', 'sdk'], (done) ->
   new Server(configFile: __dirname + '/karma.conf.coffee', done)
     .start()
 )
 
-gulp.task('test-singlerun', (done) ->
+gulp.task('test-singlerun', ['config', 'sdk'], (done) ->
   new Server({
     configFile: __dirname + '/karma.conf.coffee'
     singleRun: true
