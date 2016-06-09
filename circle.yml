@@ -8,8 +8,13 @@ machine:
     Asia/Tokyo
   node:
     version: 4.4.3
+  python:
+    version: 2.7.10  # デフォルトの2.7.6だとawsebcliインストールに失敗するため
 
 dependencies:
+  pre:
+    - pip install -U awscli
+    - pip install -U awsebcli
   override:
     - npm install
 
