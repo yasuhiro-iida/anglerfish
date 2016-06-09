@@ -8,16 +8,8 @@ machine:
     Asia/Tokyo
   node:
     version: 4.4.3
-  python:
-    version: 2.7.10  # デフォルトの2.7.6だとawsebcliインストールに失敗するため
-  environment:
-    S3_PRODUCTION: s3://anglerfish-todo/
-    S3_STAGING: s3://anglerfish-todo-staging/
 
 dependencies:
-  pre:
-    - pip install -U awscli
-    - pip install -U awsebcli
   override:
     - npm install
 
@@ -31,12 +23,10 @@ deployment:
     branch: master
     commands:
       - DEPLOY_ENV=production npm run compile
-      - aws s3 sync dist $S3_PRODUCTION
       - eb deploy
 
   staging:
     branch: staging
     commands:
       - DEPLOY_ENV=staging npm run compile
-      - aws s3 sync dist $S3_STAGING
       - eb deploy
