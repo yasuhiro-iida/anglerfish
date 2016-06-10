@@ -16,34 +16,25 @@
   },
   "acls": [
     {
-     "principalType": "ROLE",
-     "principalId": "$authenticated",
-     "permission": "ALLOW",
-     "property": "count"
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__todos"
     },
     {
-     "principalType": "ROLE",
-     "principalId": "$owner",
-     "permission": "ALLOW",
-     "property": "__create__todos"
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__todos"
     },
     {
-     "principalType": "ROLE",
-     "principalId": "$owner",
-     "permission": "ALLOW",
-     "property": "__get__todos"
-    },
-    {
-     "principalType": "ROLE",
-     "principalId": "$owner",
-     "permission": "ALLOW",
-     "property": "__destroyById__todos"
-    },
-    {
-     "principalType": "ROLE",
-     "principalId": "$authenticated",
-     "permission": "ALLOW",
-     "property": "__count__todos"
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__todos"
     }
   ],
   "methods": {}

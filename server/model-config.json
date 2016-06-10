@@ -14,30 +14,30 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "mysqlDs"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "mysqlDs",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "mysqlDs",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "mysqlDs",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "mysqlDs",
     "public": false
   },
   "ToDo": {
-    "dataSource": "db",
+    "dataSource": "mysqlDs",
     "public": true
   },
   "Account": {
-    "dataSource": "db",
+    "dataSource": "mysqlDs",
     "public": true
   }
 }

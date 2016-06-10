@@ -15,7 +15,6 @@ sources = {
   jade: './src/client/**/*.jade'
   stylus: './src/client/stylus/**/*.stylus'
   coffeeClient: './src/client/coffee/**/*.coffee'
-  coffeeServer: './src/server/coffee/**/*.coffee'
 }
 
 gulp.task('jade', ->
@@ -41,16 +40,8 @@ gulp.task('coffee-client', ->
     .pipe(bsync.stream())
 )
 
-gulp.task('coffee-server', ->
-  gulp.src(sources.coffeeServer)
-    .pipe(plumber())
-    .pipe(coffee())
-    .pipe(gulp.dest('./server'))
-    .pipe(bsync.stream())
-)
-
 gulp.task('coffeelint', ->
-  gulp.src([sources.coffeeClient, sources.coffeeServer])
+  gulp.src([sources.coffeeClient])
     .pipe(coffeelint())
     .pipe(coffeelint.reporter('coffeelint-stylish'))
 )
@@ -82,12 +73,12 @@ gulp.task('browser-sync', ['jade', 'stylus', 'coffee-client', 'sdk', 'config', '
   gulp.watch(sources.coffeeClient, ['coffee-client'], bsync.reload)
 )
 
-gulp.task('start-server', ['coffee-server'], ->
+gulp.task('start-server', ->
   nodemon({
     script: './server/server.js'
-    ext: 'coffee'
+    ext: 'js'
+    ignore: 'dist/'
     env: { 'NODE_ENV': 'development' }
-    tasks: ['coffee-server']
   })
 )
 
@@ -107,6 +98,6 @@ gulp.task('test-singlerun', ['config', 'sdk'], (done) ->
     .start()
 )
 
-gulp.task('compile', ['jade', 'stylus', 'coffee-client', 'coffee-server', 'sdk', 'config'])
+gulp.task('compile', ['jade', 'stylus', 'coffee-client', 'sdk', 'config'])
 
 gulp.task('lint', ['coffeelint'])
