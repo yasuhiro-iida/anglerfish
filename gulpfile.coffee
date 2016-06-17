@@ -80,7 +80,6 @@ gulp.task('start-server', ->
     script: './server/server.js'
     ext: 'js'
     ignore: 'dist/'
-    env: { 'NODE_ENV': 'development' }
   })
 )
 
