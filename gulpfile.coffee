@@ -8,8 +8,7 @@ ngConstant = require('gulp-ng-constant')
 bsync = require('browser-sync').create()
 Server = require('karma').Server
 nodemon = require('gulp-nodemon')
-
-console.log()
+protractor = require('gulp-protractor').protractor
 
 sources = {
   jade: './src/client/**/*.jade'
@@ -99,6 +98,21 @@ gulp.task('test-singlerun', ['config', 'sdk'], (done) ->
   }
   , done)
     .start()
+)
+
+gulp.task('e2e', ['compile', 'start-server'], ->
+  setTimeout(->
+    gulp.src(['./e2e/*.coffee'])
+      .pipe(protractor({
+        configFile: './protractor.conf.coffee'
+      }))
+      .on('error', (e) ->
+        throw e
+      )
+      .on('end', ->
+        process.exit()
+      )
+  , 3000)
 )
 
 gulp.task('compile', ['jade', 'stylus', 'coffee-client', 'sdk', 'config'])

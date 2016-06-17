@@ -4,7 +4,6 @@
     "connector": "memory"
   },
   "mysqlDs": {
-    "host": "192.168.99.100",
     "database": "ebdb",
     "username": "anglerfish",
     "password": "^anglerfish$",
