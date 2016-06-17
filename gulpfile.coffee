@@ -63,14 +63,17 @@ gulp.task('config', ->
 )
 
 gulp.task('browser-sync', ['jade', 'stylus', 'coffee-client', 'sdk', 'config', 'start-server'], ->
-  bsync.init(
-    server:
-      baseDir: './dist'
-  )
+  # バックエンドサーバが起動するまで遅延させる
+  setTimeout(->
+    bsync.init({
+      server:
+        baseDir: './dist'
+    })
 
-  gulp.watch(sources.jade, ['jade'], bsync.reload)
-  gulp.watch(sources.stylus, ['stylus'], bsync.reload)
-  gulp.watch(sources.coffeeClient, ['coffee-client'], bsync.reload)
+    gulp.watch(sources.jade, ['jade'], bsync.reload)
+    gulp.watch(sources.stylus, ['stylus'], bsync.reload)
+    gulp.watch(sources.coffeeClient, ['coffee-client'], bsync.reload)
+  , 3000)
 )
 
 gulp.task('start-server', ->
