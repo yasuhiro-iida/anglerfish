@@ -28,8 +28,9 @@ todoService = ($rootScope, $filter, $log, Account, authService) ->
       where(todoList, done)
 
     update: (todo) ->
-      todo
-        .$save()
+      Account
+        .todos
+        .updateById({id: currentUser.userId, fk: todo.id}, todo)
         .$promise
 
     remove: (todo) ->

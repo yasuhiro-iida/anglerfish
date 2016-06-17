@@ -62,7 +62,7 @@ class TodoListController
     @editing = todo
 
   doneEdit: (todoForm) ->
-    if todoForm.$invalid
+    if todoForm.$pristine
       @editing.title = @originalTitle
     else
       @todoService.update(@editing)
