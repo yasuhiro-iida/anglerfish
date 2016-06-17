@@ -1,5 +1,7 @@
 exports.config = {
 
+  specs: ['e2e/*.coffee']
+
   seleniumServerJar: './node_modules/protractor/selenium/selenium-server-standalone-2.52.0.jar'
 
   capabilities: {

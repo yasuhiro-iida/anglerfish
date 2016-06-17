@@ -9,6 +9,8 @@ bsync = require('browser-sync').create()
 Server = require('karma').Server
 nodemon = require('gulp-nodemon')
 protractor = require('gulp-protractor').protractor
+child_process = require('child_process')
+path = require('path')
 
 sources = {
   jade: './src/client/**/*.jade'
@@ -78,7 +80,7 @@ gulp.task('browser-sync', ['jade', 'stylus', 'coffee-client', 'sdk', 'config', '
 gulp.task('start-server', ->
   nodemon({
     script: './server/server.js'
-    ext: 'js'
+    ext: 'js json'
     ignore: 'dist/'
   })
 )
@@ -100,15 +102,16 @@ gulp.task('test-singlerun', ['config', 'sdk'], (done) ->
 )
 
 gulp.task('e2e', ['compile', 'start-server'], ->
+  pkgPath = require.resolve('protractor')
+  protractorDir = path.resolve(path.join(path.dirname(pkgPath), '..', 'bin'))
+  protractorBinary = path.join(protractorDir, '/protractor')
+  argv = process.argv.slice(3)
+  argv.unshift('protractor.conf.coffee')
+
   setTimeout(->
-    gulp.src(['./e2e/*.coffee'])
-      .pipe(protractor({
-        configFile: './protractor.conf.coffee'
-      }))
-      .on('error', (e) ->
-        throw e
-      )
-      .on('end', ->
+    child_process
+      .spawn(protractorBinary, argv, {stdio: 'inherit'})
+      .on('close', ->
         process.exit()
       )
   , 3000)
