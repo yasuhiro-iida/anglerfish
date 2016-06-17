@@ -4,9 +4,6 @@
     "connector": "memory"
   },
   "mysqlDs": {
-    "database": "ebdb",
-    "username": "anglerfish",
-    "password": "^anglerfish$",
     "name": "mysqlDs",
     "connector": "mysql"
   }
