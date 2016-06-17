@@ -44,4 +44,41 @@ describe('ToDoコントローラのテスト', ->
     expect($scope.vm.todoList[0]).toBe(addedTodo)
   )
 
+  describe('TodoListController', ->
+    ctrl = undefined
+
+    beforeEach(->
+      childScope = $scope.$new()
+      ctrl = $controller('TodoListController as listCtrl', {$scope: childScope})
+    )
+
+    it('doneEditでフォームが不正な場合', ->
+      ctrl.originalTitle = 'original'
+      ctrl.editing = {
+        title: 'invalid'
+        done: false
+      }
+      dummyForm = {$invalid: true}
+
+      ctrl.doneEdit(dummyForm)
+      expect(ctrl.originalTitle).toBe('')
+      expect(ctrl.editing).toEqual({})
+    )
+
+    it('doneEditでToDoが編集された場合', ->
+      todo = {
+        title: 'foo'
+        done: false
+      }
+      ctrl.editing = todo
+      dummyForm = {$invalid: false}
+      spyOn(todoService, 'update')
+
+      ctrl.doneEdit(dummyForm)
+      expect(todoService.update).toHaveBeenCalledWith(todo)
+      expect(ctrl.originalTitle).toBe('')
+      expect(ctrl.editing).toEqual({})
+    )
+  )
+
 )
