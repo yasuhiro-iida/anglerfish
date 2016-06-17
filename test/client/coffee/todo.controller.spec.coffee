@@ -75,7 +75,7 @@ describe('ToDoコントローラのテスト', ->
       spyOn(todoService, 'update')
 
       ctrl.doneEdit(dummyForm)
-      expect(todoService.update).toHaveBeenCalledWith(todo)
+      expect(todoService.update).toHaveBeenCalledWith({title: 'foo', done: false})
       expect(ctrl.originalTitle).toBe('')
       expect(ctrl.editing).toEqual({})
     )
