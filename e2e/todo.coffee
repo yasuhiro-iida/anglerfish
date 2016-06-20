@@ -45,18 +45,17 @@ describe('ToDoアプリシナリオテスト', ->
 
   it('ToDoのタイトルを編集する', ->
     todoList = element.all(By.repeater('todo in vm.todoList'))
-    originalTitle = todoList.get(0).element(By.binding('todo.title')).getText()
-    titleArea = todoList.get(0).element(By.css('.todo-title'))
-    browser.actions().doubleClick(titleArea).perform()
-    titleAreaInput = todoList.get(0).element(By.model('todo.title'))
+    titleField = todoList.get(0).element(By.binding('todo.title'))
+    titleFieldInput = todoList.get(0).element(By.model('todo.title'))
 
     expectedTitle = 'changed'
-    titleAreaInput.clear()
-    titleAreaInput.sendKeys(expectedTitle)
+    browser.actions().doubleClick(titleField).perform()
+    titleFieldInput.clear()
+    titleFieldInput.sendKeys(expectedTitle)
     # Emit blur event
-    todoList.get(1).element(By.css('.todo-title')).click()
+    todoList.get(1).element(By.binding('todo.title')).click()
 
-    changedTitle = todoList.get(0).element(By.binding('todo.title')).getText()
+    changedTitle = titleField.getText()
     expect(changedTitle).toBe(expectedTitle)
   )
 
