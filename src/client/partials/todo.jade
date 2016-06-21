@@ -29,6 +29,7 @@ ul.list-unstyled(ng-controller="TodoListController as listCtrl")
           input(type="checkbox", ng-model="todo.done", ng-change="listCtrl.check(todo)", ng-checked="todo.done")
         span.form-control.todo-title(ng-hide="todo == listCtrl.editing", ng-dblclick="listCtrl.editTodo(todo)") {{ todo.title }}
         input.form-control(type="text", required, ng-model="todo.title", ng-show="todo == listCtrl.editing", my-select="todo == listCtrl.editing", ng-blur="listCtrl.doneEdit(todoForm)")
+        span.input-group-addon(ng-hide="todo == listCtrl.editing") 登録日時: {{ todo.registeredAt | date:'yyyy/MM/dd HH:mm' }}
         span.input-group-btn(ng-if="todo != listCtrl.editing")
           button.btn.btn-danger(type="reset", ng-click="listCtrl.removeTodo(todo)") 削除
 

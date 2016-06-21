@@ -79,7 +79,7 @@ describe('ToDoコントローラのテスト', ->
       spyOn(dummyForm, '$setPristine')
 
       ctrl.doneEdit(dummyForm)
-      expect(todoService.update).toHaveBeenCalledWith({title: 'foo', done: false})
+      expect(todoService.update).toHaveBeenCalledWith({title: 'foo', done: false, registeredAt: jasmine.any(Date)})
       expect(dummyForm.$setPristine).toHaveBeenCalled()
       expect(ctrl.originalTitle).toBe('')
       expect(ctrl.editing).toEqual({})

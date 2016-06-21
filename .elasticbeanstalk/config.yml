@@ -1,0 +1,14 @@
+branch-defaults:
+  master:
+    environment: handson-XXXXXXX-production
+    group_suffix: null
+  staging:
+    environment: handson-XXXXXXX-staging
+    group_suffix: null
+global:
+  application_name: handson-XXXXXXX
+  default_ec2_keyname: null
+  default_platform: Node.js
+  default_region: ap-northeast-1
+  profile: eb-cli
+  sc: git

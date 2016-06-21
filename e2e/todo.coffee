@@ -37,6 +37,7 @@ describe('ToDoアプリシナリオテスト', ->
     expect(todoList.count()).toBe(3)
     expect(todoList.get(2).element(By.binding('todo.title')).getText()).toBe(title)
     expect(hasClass(todoList.get(2).element(By.model('todo.done')), 'ng-empty')).toBe(true)
+    expect(todoList.get(2).element(By.binding('todo.registeredAt')).getText()).toMatch(/^.*\: \d{4}\/\d{2}\/\d{2} \d{2}\:\d{2}$/)
 
     expect(allCount.getText()).toBe('4')
     expect(remainingCount.getText()).toBe('3')
@@ -46,8 +47,10 @@ describe('ToDoアプリシナリオテスト', ->
   it('ToDoのタイトルを編集する', ->
     todoList = element.all(By.repeater('todo in vm.todoList'))
     titleField = todoList.get(0).element(By.binding('todo.title'))
+    dateField = todoList.get(0).element(By.binding('todo.registeredAt'))
     titleFieldInput = todoList.get(0).element(By.model('todo.title'))
 
+    originalDate = dateField.getText()
     expectedTitle = 'changed'
     browser.actions().doubleClick(titleField).perform()
     titleFieldInput.clear()
@@ -57,6 +60,29 @@ describe('ToDoアプリシナリオテスト', ->
 
     changedTitle = titleField.getText()
     expect(changedTitle).toBe(expectedTitle)
+
+    changedDate = dateField.getText()
+    expect(changedDate).not.toBe(originalDate)
+  )
+
+  it('ToDoのタイトルを編集状態にするがタイトルを変更しない', ->
+    todoList = element.all(By.repeater('todo in vm.todoList'))
+    titleField = todoList.get(0).element(By.binding('todo.title'))
+    dateField = todoList.get(0).element(By.binding('todo.registeredAt'))
+    titleFieldInput = todoList.get(0).element(By.model('todo.title'))
+
+    originalTitle = titleField.getText()
+    originalDate = dateField.getText()
+    browser.actions().doubleClick(titleField).perform()
+    titleFieldInput.click()
+    # Emit blur event
+    todoList.get(1).element(By.binding('todo.title')).click()
+
+    afterTitle = titleField.getText()
+    expect(afterTitle).toBe(originalTitle)
+
+    afterDate = dateField.getText()
+    expect(afterDate).toBe(originalDate)
   )
 
   afterAll(->
