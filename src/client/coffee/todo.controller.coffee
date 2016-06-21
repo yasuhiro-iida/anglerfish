@@ -66,6 +66,7 @@ class TodoListController
       @editing.title = @originalTitle
     else
       @todoService.update(@editing)
+      todoForm.$setPristine()
 
     @originalTitle = ''
     @editing = {}
