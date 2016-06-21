@@ -1,5 +1,4 @@
 todoService = ($rootScope, $filter, $log, Account, authService) ->
-  currentUser = $rootScope.currentUser
   where = $filter('filter')
   done = { done: true }
   remaining = { done: false }
@@ -15,13 +14,13 @@ todoService = ($rootScope, $filter, $log, Account, authService) ->
 
     getTodoList: (callback) ->
       Account
-        .todos({id: currentUser.userId})
+        .todos({id: Account.getCurrentId()})
         .$promise
 
     add: (title) ->
       Account
         .todos
-        .create({id: currentUser.userId}, {title: title, done: false})
+        .create({id: Account.getCurrentId()}, {title: title, done: false})
         .$promise
 
     getDone: (todoList) ->
@@ -30,13 +29,13 @@ todoService = ($rootScope, $filter, $log, Account, authService) ->
     update: (todo) ->
       Account
         .todos
-        .updateById({id: currentUser.userId, fk: todo.id}, todo)
+        .updateById({id: Account.getCurrentId(), fk: todo.id}, todo)
         .$promise
 
     remove: (todo) ->
       Account
         .todos
-        .destroyById({id: currentUser.userId}, {fk: todo.id})
+        .destroyById({id: Account.getCurrentId()}, {fk: todo.id})
         .$promise
   }
 

@@ -22,18 +22,30 @@ config = (apiUrl, $routeProvider, LoopBackResourceProvider) ->
       redirectTo: '/'
     })
 
-run = ($rootScope, $location, $localStorage) ->
-  $rootScope.currentUser = $localStorage.currentUser || null
-
-  $rootScope.$on('$locationChangeStart', (event, newUrl, oldUrl) ->
+run = ($rootScope, $location, Account, LoopBackAuth) ->
+  loginCheck = ->
     restrected = ['/signup', '/login'].indexOf($location.path()) == -1
-    if restrected && !$rootScope.currentUser
+    if restrected && !Account.isAuthenticated()
       return $location.path('/login')
-    if !restrected && $rootScope.currentUser
-      $location.path('/')
-  )
+    if !restrected && Account.isAuthenticated()
+      return $location.path('/')
+
+  Account
+    .getCurrent()
+    .$promise
+    .then(->
+      $rootScope.loggedIn = true
+    )
+    .catch(->
+      LoopBackAuth.clearUser()
+      LoopBackAuth.clearStorage()
+    )
+    .finally(->
+      $rootScope.$on('$locationChangeStart', loginCheck)
+      loginCheck()
+    )
 
 angular
-  .module('todoApp', ['todoApp.config', 'lbServices', 'ngRoute', 'ngStorage'])
+  .module('todoApp', ['todoApp.config', 'lbServices', 'ngRoute'])
   .config(['apiUrl', '$routeProvider', 'LoopBackResourceProvider', config])
-  .run(['$rootScope', '$location', '$localStorage', run])
+  .run(['$rootScope', '$location', 'Account', 'LoopBackAuth', run])

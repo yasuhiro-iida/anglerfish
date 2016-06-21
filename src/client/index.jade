@@ -19,11 +19,11 @@ html(lang="ja")
 
         .collapse.navbar-collapse#navbar-collapse-1
           ul.nav.navbar-nav.navbar-right
-            li(ng-hide="currentUser")
+            li(ng-hide="loggedIn")
               a(href="#/signup") サインアップ
-            li(ng-hide="currentUser")
+            li(ng-hide="loggedIn")
               a(href="#/login") ログイン
-            li(ng-controller="LogoutController as vm", ng-show="currentUser")
+            li(ng-controller="LogoutController as vm", ng-show="loggedIn")
               a(href="", ng-click="vm.logout()") ログアウト
 
     .container
@@ -40,8 +40,6 @@ html(lang="ja")
     script(src="/js/lb-services.js")
     script(src="/js/directives.js")
     script(src="/js/auth.service.js")
+    script(src="/js/auth.controller.js")
     script(src="/js/todo.service.js")
     script(src="/js/todo.controller.js")
-    script(src="/js/signup.controller.js")
-    script(src="/js/login.controller.js")
-    script(src="/js/logout.controller.js")
