@@ -71,11 +71,16 @@ describe('ToDoコントローラのテスト', ->
         done: false
       }
       ctrl.editing = todo
-      dummyForm = {$invalid: false}
+      dummyForm = {
+        $invalid: false
+        $setPristine: ->
+      }
       spyOn(todoService, 'update')
+      spyOn(dummyForm, '$setPristine')
 
       ctrl.doneEdit(dummyForm)
       expect(todoService.update).toHaveBeenCalledWith({title: 'foo', done: false})
+      expect(dummyForm.$setPristine).toHaveBeenCalled()
       expect(ctrl.originalTitle).toBe('')
       expect(ctrl.editing).toEqual({})
     )
