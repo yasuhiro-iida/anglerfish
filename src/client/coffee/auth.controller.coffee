@@ -7,7 +7,7 @@ class SignupController
     @authService.signup(@email, @password, (err, data) =>
       if err
         console.error(err)
-        @$location.path('/signup')
+        return @$location.path('/signup')
 
       @$location.path('/login')
     )
@@ -21,7 +21,7 @@ class LoginController
     @authService.login(@email, @password, (err, data) =>
       if err
         console.error(err)
-        @$location.path('/login')
+        return @$location.path('/login')
 
       @$rootScope.loggedIn = true
       @$location.path('/')
