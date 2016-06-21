@@ -2,10 +2,10 @@
   "name": "todoApp.config",
   "constants": {
     "production": {
-      "apiUrl": "http://anglerfish-production.ap-northeast-1.elasticbeanstalk.com/api"
+      "apiUrl": "http://handson-XXXXXXX-production.ap-northeast-1.elasticbeanstalk.com/api"
     },
     "staging": {
-      "apiUrl": "http://anglerfish-staging.ap-northeast-1.elasticbeanstalk.com/api"
+      "apiUrl": "http://handson-XXXXXXX-staging.ap-northeast-1.elasticbeanstalk.com/api"
     },
     "development": {
       "apiUrl": "http://localhost:8000/api"
