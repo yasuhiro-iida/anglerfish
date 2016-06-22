@@ -65,6 +65,7 @@ class TodoListController
     if todoForm.$pristine or todoForm.$invalid
       @editing.title = @originalTitle
     else
+      @editing.registeredAt = new Date()
       @todoService.update(@editing)
       todoForm.$setPristine()
 

@@ -20,7 +20,7 @@ todoService = ($rootScope, $filter, $log, Account, authService) ->
     add: (title) ->
       Account
         .todos
-        .create({id: Account.getCurrentId()}, {title: title, done: false})
+        .create({id: Account.getCurrentId()}, {title: title, done: false, registeredAt: new Date()})
         .$promise
 
     getDone: (todoList) ->

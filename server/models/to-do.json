@@ -13,6 +13,9 @@
     "done": {
       "type": "boolean",
       "required": true
+    },
+    "registeredAt": {
+      "type": "date"
     }
   },
   "validations": [],
