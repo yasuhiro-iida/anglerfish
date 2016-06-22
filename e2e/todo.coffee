@@ -74,7 +74,7 @@ describe('ToDoアプリシナリオテスト', ->
     originalDate = dateField.getText()
     browser.actions().doubleClick(titleField).perform()
     titleFieldInput.click()
-    # Emit blur event
+    ## Emit blur event
     todoList.get(1).element(By.binding('todo.title')).click()
 
     afterTitle = titleField.getText()
